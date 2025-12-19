@@ -1,0 +1,35 @@
+# DRO (Distributionally Robust Optimization) Configuration
+
+seed: 42
+device: auto
+
+data:
+  dataset: synthetic
+  batch_size: 64
+  spurious_correlation: 0.9
+  n_groups: 4
+  group_balanced: false
+
+model:
+  encoder: simple_cnn
+  num_classes: 2
+
+train:
+  method: dro
+  epochs: 50
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  optimizer: sgd
+  scheduler: cosine
+  warmup_epochs: 5
+  
+  # DRO-specific parameters
+  dro_step_size: 0.01
+  dro_robust_step_size: 0.01
+  dro_gamma: 0.1
+  dro_normalize: true
+
+logging:
+  use_tensorboard: true
+  log_dir: ./logs
+  save_dir: ./outputs/dro

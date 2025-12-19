@@ -1,0 +1,81 @@
+# Default DRRL Configuration
+
+# Random seed for reproducibility
+seed: 42
+device: auto
+mixed_precision: false
+deterministic: true
+
+# Data configuration
+data:
+  dataset: synthetic
+  data_dir: ./data
+  batch_size: 64
+  num_workers: 4
+  pin_memory: true
+  spurious_correlation: 0.9
+  train_ratio: 0.8
+  val_ratio: 0.1
+  use_augmentation: true
+  image_size: 64
+  n_groups: 4
+  group_balanced: false
+
+# Model configuration
+model:
+  encoder: simple_cnn
+  pretrained: false
+  freeze_encoder: false
+  classifier_type: linear
+  hidden_dims: [256]
+  dropout: 0.5
+  num_classes: 2
+  embedding_dim: 128
+
+# Training configuration
+train:
+  method: erm
+  epochs: 50
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  momentum: 0.9
+  optimizer: sgd
+  scheduler: cosine
+  warmup_epochs: 5
+  min_lr: 0.000001
+  early_stopping: true
+  patience: 10
+  gradient_clip: 1.0
+  
+  # SAM parameters
+  sam_rho: 0.05
+  sam_adaptive: false
+  
+  # DRO parameters
+  dro_step_size: 0.01
+  dro_robust_step_size: 0.01
+  dro_gamma: 0.1
+  dro_normalize: true
+
+# Logging configuration
+logging:
+  use_wandb: false
+  use_tensorboard: true
+  project_name: drrl-framework
+  log_dir: ./logs
+  save_dir: ./outputs
+  plot_dir: ./plots
+  log_interval: 10
+  save_interval: 5
+  save_embeddings: true
+  embedding_interval: 10
+
+# Evaluation configuration
+eval:
+  eval_batch_size: 128
+  compute_confusion: true
+  compute_embeddings: true
+  metrics:
+    - accuracy
+    - worst_group_accuracy
+    - per_group_accuracy
