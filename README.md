@@ -174,7 +174,18 @@ plot_embeddings_by_group_and_class(
 
 Compare per-group and worst-group accuracy:
 
+```python
+from viz import plot_worst_vs_average
 
+plot_worst_vs_average(
+    method_results={
+        'ERM': {'accuracy': 0.92, 'worst_group_accuracy': 0.65},
+        'SAM': {'accuracy': 0.90, 'worst_group_accuracy': 0.72},
+        'DRO': {'accuracy': 0.88, 'worst_group_accuracy': 0.82}
+    },
+    save_path='plots/worst_vs_average'
+)
+```
 
 **Interpretation**: ERM achieves highest average accuracy but lowest worst-group accuracy. DRO sacrifices some average performance for much better worst-group performance.
 
